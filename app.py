@@ -265,4 +265,4 @@ The project demonstrates the end-to-end data science process:
 """)
 
 st.markdown("---")
-st.caption("IDS Project | Live Winner Predictor in Cricket")
+st.caption("Zoha Anjum | IDS Project | Live Winner Predictor in Cricket")
