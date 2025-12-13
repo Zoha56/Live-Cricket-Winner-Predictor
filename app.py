@@ -180,15 +180,15 @@ with col3:
     st.markdown("### Current Match State")
     current_score = st.number_input("Current Score", min_value=0, max_value=target_score, value=80, step=1)
     wickets_down = st.slider("Wickets Down", min_value=0, max_value=10, value=3)
-    overs_completed = st.slider("Overs Completed (Decimal: Over.Ball)", min_value=0.0, max_value=19.5, value=10.0, step=0.1)
+    overs = st.number_input("Overs Completed (0-19)", min_value=0, max_value=19, value=10, step=1)
+    balls = st.slider("Balls of Current Over (0-5)", min_value=0, max_value=5, value=0, step=1)
     
-    # Validation for overs_completed
-    if overs_completed > 19.5:
-        st.error("Overs completed cannot exceed 19.5 (or 20 overs total).")
-        st.stop()
-
+   
 # Prediction Button
 if st.button("Predict Winning Probability", type="primary"):
+    
+   # Calculate the Over.Ball decimal format needed by the prediction function
+    overs_completed = overs + (balls / 10)
     
     runs_needed = target_score - current_score
     # Calculate balls left based on over.ball format
@@ -196,6 +196,7 @@ if st.button("Predict Winning Probability", type="primary"):
     balls_left = max(0, 120 - total_balls_faced)
     
     if runs_needed <= 0 and balls_left >= 0:
+        st.balloons()
         st.success(f"**{batting_team} wins!** (Target {target_score}, Current Score {current_score})")
     elif runs_needed > 0 and balls_left == 0:
         st.error(f"**{bowling_team} wins!** (Match over, {batting_team} scored {current_score} against Target {target_score})")
@@ -213,11 +214,11 @@ if st.button("Predict Winning Probability", type="primary"):
         # Color coding for probability
         if prob_percent > 60:
             st.balloons()
-            st.success(f"**HIGH CHANCE!**")
+            st.success(f"**HIGH CHANCE!** The model predicts {batting_team} is likely to win.")
         elif prob_percent > 40:
-            st.info(f"**EVENLY MATCHED!**")
+            st.info(f"**EVENLY MATCHED!** The match is closely contested.")
         else:
-            st.warning(f"**LOW CHANCE!**")
+            st.warning(f"**LOW CHANCE!** The model predicts {bowling_team} is likely to win.")
 
         st.progress(prob_percent/100)
         
@@ -232,8 +233,6 @@ if st.button("Predict Winning Probability", type="primary"):
             st.metric(label=f"{bowling_team} Win Probability", value=f"{loss_prob_percent:.2f} %")
             st.metric(label="Current Run Rate (CRR)", value=f"{crr:.2f}")
             st.metric(label="Required Run Rate (RRR)", value=f"{rrr:.2f}")
-
-
 # --- EDA Insights Section (Moved after Model/Prediction) ---
 st.header("3. Exploratory Data Analysis (EDA) Insights")
 st.write("Key insights derived from the dataset:")
