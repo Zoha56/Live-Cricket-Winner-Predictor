@@ -87,10 +87,10 @@ The model was evaluated on a held-out test set, demonstrating robust performance
 
 | Metric | Value |
 | :--- | :--- |
-| **Accuracy** | ${ml_metrics['Accuracy']:.4f}$ |
-| **Precision** | ${ml_metrics['Precision']:.4f}$ |
-| **F1-Score** | ${ml_metrics['F1-Score']:.4f}$ |
-| **ROC-AUC** | ${ml_metrics['ROC-AUC']:.4f}$ |
+| **Accuracy** |0.8919|
+| **Precision** |0.8843 |
+| **F1-Score** | 0.8821|
+| **ROC-AUC** | 0.9610|
 
 ## 💻 Streamlit App Navigation
 
